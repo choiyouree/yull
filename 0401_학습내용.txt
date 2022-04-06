@@ -1,0 +1,61 @@
+0401 - 업무일지
+
+css에서 전체에 공통적으로 적용할 부분을 common부분이라고 한다.
+.inner(박스)에 margin 0 auto 가운데 정렬
+position relative - 위치상의 부모요소가 될 수 있도록 함
+> 자식선택자(부등호 사용) : 어떠한 효과를 지정할때 다른 부분에 중복되지 않도록 해당하는 부모의 자식요소에게만 지정하고자 할 때 사용한다.
+
+코드가 불필요하게 길어지지않도록 생략할 수 있는 코드는 최대한 생략되도록 한다.
+부모요소 작성하면 자식요소에도 상속되기 때문에 공통적으로 들어가는 부분은 부모요소에 작성한다.
+(더 나중에 scss 전처리 도구를 쓰면 길어지는 코드를 쉽게 관리할 수 있다.)
+
+BEM (block element modifier) - html 클래스 속성의 작명법
+내가 원하지 않는 스타일이 들어갈 수도 있고 , 중복 될 수도 있는 환경이 많다.
+ 	ㄴ요소_ 일부분 - underscore 기호로 요소의 일부분 표시
+ 	(ex. __언더바 두번..부모가 container 의 자식요소 container__name 으로...(일부이다))
+   
+	ㄴ요소--상태- hyphen하이픈 기호로 요소의 상태를 표시
+ 	(ex. btn btn--primary, btn btn--success, btn btn--error 그 요소의 상태나 역활을 유추할수있게 함)
+
+----------------------------------------------------------------------------------------------------------------
+postion:fixed,absolute -가로 넓이가 최소한으로 줄어드려는 성격
+position:relative - 가로 넓이가 최대한으로 늘어나려는 성격.
+
+작업을 하다가 positon:relative와 position:fixed가 만나도 그 요소의 기준을 가질 수 있어서 바꿔서 사용 가능하다.
+-------------------------------------------------------------------------------------------------------
+*lodash cdn
+
+js - _.throttle : 일정시간에 한번씩만 실행되도록 하는 것
+_.throttle(함수, 시간)
+
+
+// 콘솔에 출력되는 갯수를 일정시간에 한번씩만 실행되도록 _.throttle기능.. 화면에 많은 
+// 함수 들이 사용되기 때문에 많이 사용함
+const badgeEl = document.querySelector('header .badges');
+
+window.addEventListener('scroll', _.throttle(function () {
+  console.log('scroll!');
+}, 300));
+
+*gsap cdn- 없어졌다가 나타나기 기능 - gsap.to(요소, 지속시간, 옵션)
+// 뱃지가 일정값이 넘어가면 없어지고 다시 돌아오면 생기도록 하는 
+// 도큐먼트에서 선택하겠다 헤더에 뱃지 부분을 badgeEl이라고 선언
+const badgeEl = document.querySelector('header .badges');
+// window 화면자체를 뜻함.
+window.addEventListener('scroll', _.throttle(function () {
+  console.log(window.scrollY);
+  if (window.scrollY > 500) {
+    // 배지숨기기
+    // gsap.to(요소, 지속시간, 옵션);
+    gsap.to(badgeEl, .6, {
+      opacity: 0,
+      display: 'none'
+    });
+  } else {
+    // 배지보이기
+    gsap.to(badgeEl, .6, {
+      opacity: 1,
+      display: 'block'
+    });
+  }
+}, 300));
